@@ -12,7 +12,7 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 // create the contact object - represents a document in the games coollection
-let contact = require('../config/contacts');
+let contact = require('../models/contacts');
 
 //++++++++++++++++++++++++++++ Five Page Templates +++++++++++++++++++++++++++++++++++
 /* 1. GET services page. */

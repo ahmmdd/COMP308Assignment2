@@ -15,12 +15,11 @@ let bodyParser = require('body-parser');
 // import the mongoose NPM module
 let mongoose = require("mongoose");
 
-// MongoDB Connection string
-let URI = "mongodb://ahmed3415:3415@ds060009.mlab.com:60009/businesscontactlist";
-//let URI = "mongodb://localhost/BusinessContactList";
+// import the config module
+let config = require('./config/db');
 
 //connect to Mongo db using the URI
-mongoose.connect(URI);
+mongoose.connect(config.URI);
 
 // create a db object and make a reference to the connection
 let db = mongoose.connection;
@@ -45,13 +44,13 @@ let app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// uncomment after placing your favicon in /client
+//app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/', index);
 app.use('/about', about);
