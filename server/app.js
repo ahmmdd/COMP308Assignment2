@@ -19,7 +19,7 @@ let mongoose = require("mongoose");
 let config = require('./config/db');
 
 //connect to Mongo db using the URI
-mongoose.connect(config.URI);
+mongoose.connect(process.env.URI || config.URI);
 
 // create a db object and make a reference to the connection
 let db = mongoose.connection;
@@ -34,7 +34,7 @@ db.once('open', () => {
 let index = require('./routes/index');
 let about = require('./routes/index');
 let contact = require('./routes/index');
-let contacts = require('./routes/index');
+let contactlist = require('./routes/index');
 let projects = require('./routes/index');
 let services = require('./routes/index');
 
@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', index);
 app.use('/about', about);
 app.use('/contact', contact);
-app.use('/contacts', contact);
+app.use('/contactlist', contactlist);
 app.use('/services', services);
 app.use('/projects', projects);
 
