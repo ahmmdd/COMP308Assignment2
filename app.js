@@ -12,23 +12,30 @@ let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 
-// adding the mongoose module
+// import the mongoose NPM module
 let mongoose = require("mongoose");
 
-// connect to mongoDB and use the BusinessContactList database
-let URI = "mongodb://ahmed3415:3415@ds060009.mlab.com:60009/businesscontactlist"
+// MongoDB Connection string
+let URI = "mongodb://ahmed3415:3415@ds060009.mlab.com:60009/businesscontactlist";
 //let URI = "mongodb://localhost/BusinessContactList";
-mongoose.connect(URI, (err)=> {
-  if(err){
-    console.log("Error connecting to the database");
-  } else{
-    console.log("Connected to mongoDB");
-  }
+
+//connect to Mongo db using the URI
+mongoose.connect(URI);
+
+// create a db object and make a reference to the connection
+let db = mongoose.connection;
+
+// Listern for a sucessful connection
+db.on('error', console.error.bind(console, 'Connection Error: '));
+db.once('open', () => {
+    console.log("Connected to MongoDB...");
 });
+
 
 let index = require('./routes/index');
 let about = require('./routes/index');
 let contact = require('./routes/index');
+let contacts = require('./routes/index');
 let projects = require('./routes/index');
 let services = require('./routes/index');
 
@@ -49,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/about', about);
 app.use('/contact', contact);
+app.use('/contacts', contact);
 app.use('/services', services);
 app.use('/projects', projects);
 
