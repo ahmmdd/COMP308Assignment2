@@ -12,6 +12,20 @@ let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 
+// adding the mongoose module
+let mongoose = require("mongoose");
+
+// connect to mongoDB and use the BusinessContactList database
+let URI = "mongodb://ahmed3415:3415@ds060009.mlab.com:60009/businesscontactlist"
+//let URI = "mongodb://localhost/BusinessContactList";
+mongoose.connect(URI, (err)=> {
+  if(err){
+    console.log("Error connecting to the database");
+  } else{
+    console.log("Connected to mongoDB");
+  }
+});
+
 let index = require('./routes/index');
 let about = require('./routes/index');
 let contact = require('./routes/index');

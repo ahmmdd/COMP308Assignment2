@@ -9,36 +9,34 @@ var express = require('express');
 var router = express.Router();
 //++++++++++++++++++++++++++++ Templates +++++++++++++++++++++++++++++++++++
 /* 1. GET services page. */
-router.get('/services', function(req, res, next) {
-  res.render('services', { title: 'Services', 
+router.get('/services', (req, res, next) => {
+  res.render('content/services', { title: 'Services', 
                         name: 'Mohammed Juned Ahmed' });
 });
 
 /* 2. GET projects page. */
-router.get('/projects', function(req, res, next) {
-  res.render('projects', { title: 'Projects', 
+router.get('/projects', (req, res, next) => {
+  res.render('content/projects', { title: 'Projects', 
                         name: 'Mohammed Juned Ahmed' });
 });
 
 /* 3. GET contact me page. */
-router.get('/contact', function(req, res, next) {
-  res.render('contact', { title: 'Contact Me', 
+router.get('/contact', (req, res, next) => {
+  res.render('content/contact', { title: 'Contact Me', 
                         name: 'Mohammed Juned Ahmed' });
 });
 
 /* 4. GET about me page. */
-router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'About Me', 
+router.get('/about', (req, res, next) => {
+  res.render('content/about', { title: 'About Me', 
                         name: 'Mohammed Juned Ahmed' });
 });
 
 /* 5. GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home', 
+router.get('/', (req, res, next) => {
+  res.render('content/index', { title: 'Home', 
                         name: 'Mohammed Juned Ahmed' });
 });
-
-
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
