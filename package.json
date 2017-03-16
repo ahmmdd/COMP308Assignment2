@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=3.5.0"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -12,21 +16,17 @@
     "ejs": "~2.5.2",
     "express": "~4.14.0",
     "morgan": "~1.7.0",
-    "nodemailer": "^3.0.2",
     "nodemon": "^1.11.0",
-    "sendmail": "^1.1.1",
     "serve-favicon": "~2.3.0"
   },
-  "main": "app.js",
-  "devDependencies": {},
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahmmdd/COMP308Assignment2.git"
   },
   "keywords": [
-    "Express",
-    "EJS",
-    "JS"
+    "ExpressJS",
+    "NodeJS"
   ],
   "author": "Mohammed Juned Ahmed",
   "license": "ISC",
