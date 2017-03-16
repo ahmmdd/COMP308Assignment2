@@ -1,0 +1,26 @@
+{
+  "name": "businesscontactlist",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Mohammed Juned Ahmed"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Express",
+    "EJS",
+    "JS"
+  ],
+  "homepage": "https://github.com/ahmmdd/COMP308Assignment2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/Scripts/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.2.4"
+  }
+}
