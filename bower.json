@@ -7,9 +7,9 @@
   ],
   "license": "ISC",
   "keywords": [
-    "Express",
+    "ExpressJS",
     "EJS",
-    "JS"
+    "NodeJS"
   ],
   "homepage": "https://github.com/ahmmdd/COMP308Assignment2",
   "ignore": [
