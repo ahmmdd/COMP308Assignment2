@@ -40,6 +40,7 @@ router.get('/', requireAuth, (req, res, next) => {
     } else {
       res.render('contacts/index', {
         title: 'Contacts',
+        
         contacts: contacts,
         displayName: req.user ? req.user.displayName : ''
       });

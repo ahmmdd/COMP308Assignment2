@@ -20,6 +20,12 @@ let User = UserModel.User; // alias for User
 // create the contact object - represents a document in the games coollection
 let contact = require('../models/contacts');
 
+// Sorting of the list
+/*
+contact.contactSchema.find({}, null, {sort: {name: 1}}, function (err, contacts) {
+    res.send(contacts);
+});
+*/
 // function to check if the user is authenticated
 function requireAuth(req, res, next) {
   // check if the user is logged index
@@ -51,7 +57,7 @@ router.get('/projects', (req, res, next) => {
 /* 3. GET contact me page. */
 router.get('/contact', (req, res, next) => {
   res.render('content/contact', { 
-    title: 'Contact Me', 
+    title: 'Contact', 
     name: 'Mohammed Juned Ahmed' ,
     displayName: req.user ? req.user.displayName : ''
   });
@@ -60,7 +66,7 @@ router.get('/contact', (req, res, next) => {
 /* 4. GET about me page. */
 router.get('/about', (req, res, next) => {
   res.render('content/about', { 
-    title: 'About Me',
+    title: 'About',
     name: 'Mohammed Juned Ahmed' ,
     displayName: req.user ? req.user.displayName : ''
   });
