@@ -32,11 +32,7 @@ db.once('open', () => {
 
 
 let index = require('./routes/index');
-let about = require('./routes/index');
-let contact = require('./routes/index');
-let contactlist = require('./routes/index');
-let projects = require('./routes/index');
-let services = require('./routes/index');
+let contacts = require('./routes/contacts');
 
 let app = express();
 
@@ -52,12 +48,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+// route redirects
 app.use('/', index);
-app.use('/about', about);
-app.use('/contact', contact);
-app.use('/contactlist', contactlist);
-app.use('/services', services);
-app.use('/projects', projects);
+app.use('/contacts', contacts);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

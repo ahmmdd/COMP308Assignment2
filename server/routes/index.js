@@ -55,23 +55,6 @@ router.get('/', (req, res, next) => {
   });
 });
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-/* 6. Business Contact List */
-router.get('/contactlist', (req, res, next) => {
-  // find all contacts in the contacts collection
-  contact.find((err, contacts) => {
-    if(err){
-      return console.error(err);
-    } else {
-      res.render('content/contactlist', {
-        title: 'Contact List',
-        contacts: contacts
-      });
-    }
-  });
-});
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 module.exports = router;
