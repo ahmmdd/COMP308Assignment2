@@ -56,6 +56,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+// setup session
+app.use(session({
+  secret: "SomeSecret",
+  saveUninitialized: true,
+  resave: true
+}));
+
+// initialize passport and flash
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
 // route redirects
 app.use('/', index);
 app.use('/contacts', contacts);
