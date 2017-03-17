@@ -13,7 +13,7 @@ let mongoose = require('mongoose');
 
 // create the contact object - represents a document in the games coollection
 let contact = require('../models/contacts');
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 /* Get main contacts page. */
 router.get('/', (req, res, next) => {
@@ -29,7 +29,36 @@ router.get('/', (req, res, next) => {
     }
   });
 });
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+/*+++++++++ ADD +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/* Get add page - show the blank details page. */
+router.get('/add', (req, res, next) => {
+  res.render('contacts/details', {
+    title: 'Add New Contact',
+    contacts: ''
+  });
+});
+
+/* POST add page - save the contact to db. */
+router.post('/add', (req, res, next) => {
+  contact.create({
+    "name": req.body.name,
+    "number": req.body.number,
+    "email": req.body.email
+  }, (err, contact) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect("/contacts");
+    }
+  });
+});
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/*+++++++++ EDIT +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* Get edit - show current contact to edit. */
 router.get('/:id', (req, res, next) => {
   
@@ -44,7 +73,7 @@ router.get('/:id', (req, res, next) => {
     } else {
       // Show the details view
       res.render('contacts/details', {
-        title: 'Game Details',
+        title: 'Contact Details',
         contacts: contacts
       });
     }
@@ -74,8 +103,14 @@ router.post('/:id', (req, res, next) => {
       res.redirect('/contacts');
     }
   });
-
 });
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+/*+++++++++ DELETE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 module.exports = router;
