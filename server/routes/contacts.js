@@ -21,7 +21,7 @@ let User = UserModel.User; // alias for User
 function requireAuth(req, res, next) {
   // check if the user is logged index
   if(!req.isAuthenticated()) {
-    return res.redirect('auth/login');
+    return res.redirect('/login');
   }
   next();
 }
@@ -40,7 +40,8 @@ router.get('/', requireAuth, (req, res, next) => {
     } else {
       res.render('contacts/index', {
         title: 'Contacts',
-        contacts: contacts
+        contacts: contacts,
+        displayName: req.user ? req.user.displayName : ''
       });
     }
   });
@@ -90,7 +91,8 @@ router.get('/:id', requireAuth, (req, res, next) => {
         // Show the details view
         res.render('contacts/details', {
           title: 'Contact Details',
-          contacts: contacts
+          contacts: contacts,
+          displayName: req.user ? req.user.displayName : ''
         });
       }
     });

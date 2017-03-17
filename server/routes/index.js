@@ -24,7 +24,7 @@ let contact = require('../models/contacts');
 function requireAuth(req, res, next) {
   // check if the user is logged index
   if(!req.isAuthenticated()) {
-    return res.redirect('auth/login');
+    return res.redirect('/login');
   }
   next();
 }
@@ -34,7 +34,8 @@ function requireAuth(req, res, next) {
 router.get('/services', (req, res, next) => {
   res.render('content/services', {
     title: 'Services',
-    name: 'Mohammed Juned Ahmed' 
+    name: 'Mohammed Juned Ahmed' ,
+    displayName: req.user ? req.user.displayName : ''
   });
 });
 
@@ -42,7 +43,8 @@ router.get('/services', (req, res, next) => {
 router.get('/projects', (req, res, next) => {
   res.render('content/projects', { 
     title: 'Projects',
-    name: 'Mohammed Juned Ahmed' 
+    name: 'Mohammed Juned Ahmed' ,
+    displayName: req.user ? req.user.displayName : ''
   });
 });
 
@@ -50,7 +52,8 @@ router.get('/projects', (req, res, next) => {
 router.get('/contact', (req, res, next) => {
   res.render('content/contact', { 
     title: 'Contact Me', 
-    name: 'Mohammed Juned Ahmed' 
+    name: 'Mohammed Juned Ahmed' ,
+    displayName: req.user ? req.user.displayName : ''
   });
 });
 
@@ -58,7 +61,8 @@ router.get('/contact', (req, res, next) => {
 router.get('/about', (req, res, next) => {
   res.render('content/about', { 
     title: 'About Me',
-    name: 'Mohammed Juned Ahmed' 
+    name: 'Mohammed Juned Ahmed' ,
+    displayName: req.user ? req.user.displayName : ''
   });
 });
 
@@ -66,9 +70,38 @@ router.get('/about', (req, res, next) => {
 router.get('/', (req, res, next) => {
   res.render('content/index', { 
     title: 'Home',
-    name: 'Mohammed Juned Ahmed' 
+    name: 'Mohammed Juned Ahmed' ,
+    displayName: req.user ? req.user.displayName : ''
   });
 });
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/*++++++++++++++++++++++++++++ Login Templates ++++++++++++++++++++++++++*/
+/* GET /login - render the login view */
+router.get('/login', (req, res, next) => {
+  // check to see if the user is already logged in
+  if(!req.user){
+    // render the login page
+    res.render('auth/login', {
+      title: 'Login',
+      contacts: '',
+      messages: req.flash('loginMessage'),
+      displayName: req.user ? req.user.displayName : ''
+    });
+    return;
+  } else {
+    // redirect to contact list
+    return res.redirect('/contacts');
+  }
+});
+
+/* POST /login  */
+router.post('/login', passport.authenticate('local',{
+  successRedirect: '/contatcs',
+  failureRedirect: '/login',
+  failureflash: true
+}));
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
