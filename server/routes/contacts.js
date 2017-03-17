@@ -107,10 +107,21 @@ router.post('/:id', (req, res, next) => {
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
 /*+++++++++ DELETE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-
+// GET Delete - should Delete by id
+router.get('/delete/:id', (req, res, next) => {
+  // Get the reference to the if of the contact to edit
+  let id = req.params.id;
+  contact.remove({_id: id}, (err) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect('/contacts');
+    }
+  });
+});
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 module.exports = router;
