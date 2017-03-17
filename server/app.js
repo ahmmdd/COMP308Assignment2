@@ -5,12 +5,20 @@
  * File Description: The Express server configuration file that load up first.
  */
 
+// module inclusion / requirements / dependencies
 let express = require('express');
-let path = require('path');
+let path = require('path'); // part of node.js core
 let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+
+// modules for authentication
+let session = require("express-session");
+let passport = require("passport");
+let passportlocal = require("passport-local");
+let LocalStrategy = passportlocal.Strategy;
+let flash = require("connect-flash"); // display errors / login messages
 
 // import the mongoose NPM module
 let mongoose = require("mongoose");
@@ -52,23 +60,22 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', index);
 app.use('/contacts', contacts);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// Handle 404 Errors
+  app.use(function(req, res) {
+    res.status(400);
+    res.render('errors/404',{
+      title: '404: File Not Found'
+    });
+  });
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // Handle 500 Errors
+  app.use(function(error, req, res, next) {
+      res.status(500);
+      res.render('errors/500', {
+        title:'500: Internal Server Error',
+        error: error
+      });
+  });
 
 // used to return application module
 module.exports = app;

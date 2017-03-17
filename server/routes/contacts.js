@@ -7,6 +7,7 @@
 
 // import the express object
 let express = require('express');
+
 // create the router for the application
 let router = express.Router();
 let mongoose = require('mongoose');
@@ -61,23 +62,27 @@ router.post('/add', (req, res, next) => {
 /*+++++++++ EDIT +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* Get edit - show current contact to edit. */
 router.get('/:id', (req, res, next) => {
-  
-  // Get the reference to the if of the contact to edit
-  let id = req.params.id;
+  try{
+    // Get the reference to the if of the contact to edit
+    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-  // find all contact to edit by its id
-  contact.findById(id, (err, contacts) => {
-    if(err){
-      console.error(err);
-      res.end(error); 
-    } else {
-      // Show the details view
-      res.render('contacts/details', {
-        title: 'Contact Details',
-        contacts: contacts
-      });
-    }
-  });
+    // find all contact to edit by its id
+    contact.findById(id, (err, contacts) => {
+      if(err){
+        console.error(err);
+        res.end(error); 
+      } else {
+        // Show the details view
+        res.render('contacts/details', {
+          title: 'Contact Details',
+          contacts: contacts
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.redirect('/errors/404');
+  }
 });
 
 /* Get post - process the contact to edit. */
