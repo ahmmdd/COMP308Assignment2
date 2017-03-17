@@ -11,13 +11,28 @@ let express = require('express');
 // create the router for the application
 let router = express.Router();
 let mongoose = require('mongoose');
+let passport = require('passport');
+
+// define the user model
+let UserModel = require('../models/users');
+let User = UserModel.User; // alias for User
+
+// function to check if the user is authenticated
+function requireAuth(req, res, next) {
+  // check if the user is logged index
+  if(!req.isAuthenticated()) {
+    return res.redirect('auth/login');
+  }
+  next();
+}
 
 // create the contact object - represents a document in the games coollection
 let contact = require('../models/contacts');
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 /* Get main contacts page. */
-router.get('/', (req, res, next) => {
+router.get('/', requireAuth, (req, res, next) => {
   // find all contacts in the contacts collection
   contact.find((err, contacts) => {
     if(err){
@@ -35,7 +50,7 @@ router.get('/', (req, res, next) => {
 /*+++++++++ ADD +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 /* Get add page - show the blank details page. */
-router.get('/add', (req, res, next) => {
+router.get('/add', requireAuth, (req, res, next) => {
   res.render('contacts/details', {
     title: 'Add New Contact',
     contacts: ''
@@ -43,7 +58,7 @@ router.get('/add', (req, res, next) => {
 });
 
 /* POST add page - save the contact to db. */
-router.post('/add', (req, res, next) => {
+router.post('/add', requireAuth, (req, res, next) => {
   contact.create({
     "name": req.body.name,
     "number": req.body.number,
@@ -61,7 +76,7 @@ router.post('/add', (req, res, next) => {
 
 /*+++++++++ EDIT +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* Get edit - show current contact to edit. */
-router.get('/:id', (req, res, next) => {
+router.get('/:id', requireAuth, (req, res, next) => {
   try{
     // Get the reference to the if of the contact to edit
     let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
@@ -86,7 +101,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 /* Get post - process the contact to edit. */
-router.post('/:id', (req, res, next) => {
+router.post('/:id', requireAuth, (req, res, next) => {
   
   // Get the reference to the if of the contact to edit
   let id = req.params.id;
@@ -115,7 +130,7 @@ router.post('/:id', (req, res, next) => {
 /*+++++++++ DELETE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 // GET Delete - should Delete by id
-router.get('/delete/:id', (req, res, next) => {
+router.get('/delete/:id', requireAuth, (req, res, next) => {
   // Get the reference to the if of the contact to edit
   let id = req.params.id;
   contact.remove({_id: id}, (err) => {

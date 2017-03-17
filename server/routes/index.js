@@ -5,16 +5,31 @@
  * File Description:
  */
 
+/* modules required for routing */
 // import the express object
 let express = require('express');
 // create the router for the application
 let router = express.Router();
 let mongoose = require('mongoose');
+let passport = require('passport');
+
+// define the user model
+let UserModel = require('../models/users');
+let User = UserModel.User; // alias for User
 
 // create the contact object - represents a document in the games coollection
 let contact = require('../models/contacts');
 
-//++++++++++++++++++++++++++++ Five Page Templates +++++++++++++++++++++++++++++++++++
+// function to check if the user is authenticated
+function requireAuth(req, res, next) {
+  // check if the user is logged index
+  if(!req.isAuthenticated()) {
+    return res.redirect('auth/login');
+  }
+  next();
+}
+
+/*++++++++++++++++++++++++++++ Five Page Templates ++++++++++++++++++++++++++*/
 /* 1. GET services page. */
 router.get('/services', (req, res, next) => {
   res.render('content/services', {
@@ -55,6 +70,6 @@ router.get('/', (req, res, next) => {
   });
 });
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 module.exports = router;
